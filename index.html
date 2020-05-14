@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang='en'>
+
+  <head>
+    <!-- Meta info -->
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description" content="Create a spotify playlist from a BBC Sounds episode.">
+
+    <!-- Browser parameters -->
+    <title>BBC Spotilist</title>
+    <link rel="icon" type="image/png" href="resources/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+
+    <img src="/resources/favicon.png"
+      alt="BBC Spotilist logo"</img>
+    <h1>BBC Spotilist</h1>
+    <p id="subtitle">Create a spotify playlist from a BBC Sounds episode.</p>
+
+    <main>
+      <p id="intro">
+        This site makes a spotify playlist containing all the tracks in a given
+        BBC Sounds episode. All you need to do is:
+        <ul id="instructions">
+          <li><b>Copy the url</b> of the BBC Sounds episode you're interested in.</li>
+          <li><b>Paste the url</b> into the box below.</li>
+          <li><b>Click go</b> and let the tool do its thing. You'll need to authenticate your spotify account so that it can make you a playlist!</li>
+        </ul>
+        All of this is done in your browser using JavaScript, which maximises
+        your privacy and security. As such you'll need <a
+        href=https://updatemybrowser.org/>a modern browser</a> to use this
+        tool. Please note that this tool is not affiliated with either the BBC or Spotify.
+      </p>
+      <br>
+      <div id="buttons">
+        <label class="button">
+          BBC Sounds URL:
+          <input type='text' id='urlInput' placeholder="https://www.bbc.co.uk/sounds/play/m000hvxg" defaultValue="https://www.bbc.co.uk/sounds/play/m000hvxg">
+        </label>
+        <button id='urlSubmit' class="button">Go!</button>
+      </div>
+      <textarea name="outputBox" id="outputBox" rows="5" placeholder="RESULTS:" readonly></textarea>
+    </main>
+
+    <footer>
+      <p>
+        A <a href=https://github.com/aricooperdavis/BBC-Spotilist>free
+        and open source</a> project by <a href=https://www.cooper-davis.net>
+        Ari Cooper-Davis</a>, using <a
+        href=https://github.com/Rob--W/cors-anywhere/>CORS Anywhere</a> and <a
+        href=https://github.com/jquery/jquery>jQuery</a>.
+      </p>
+    </footer>
+
+    <!-- Load relevant JavaScripts -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="bbcspotilist.alpha.js"></script>
+  </body>
+
+</html>
