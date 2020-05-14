@@ -49,7 +49,7 @@ function startProcess() {
 	/* Authenticate with Spotify */
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
-  var redirect_uri = 'http://localhost:8000'; // Your redirect uri
+  var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
 
   var state = generateRandomString(16);
 
