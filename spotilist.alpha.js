@@ -21,13 +21,13 @@ function urlTest() {
 	};
 };
 
-// ----------------- Copied Functions --------------------------
-
 function printToOutput(message) {
 	/* Append message to output box and scroll to bottom */
 	outputBox.value += message+"\n";
 	outputBox.scrollTop = outputBox.scrollHeight;
 }
+
+// ----------------- Spotify GitHub Code --------------------------
 
 function getHashParams() {
 	/* Parse hash in returned uri address */
@@ -61,6 +61,8 @@ var access_token = params.access_token,
     state = params.state,
     storedState = localStorage.getItem(stateKey);
 		urlInput.value = localStorage.getItem(inputText)
+
+// ----------------- Main Process --------------------------
 
 function startProcess() {
 

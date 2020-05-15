@@ -11,6 +11,7 @@ body{
 	border: 2px solid;
 	padding: 20px 20px 1px 20px;
 	border-radius: 10px;
+	min-width: 500px;
 }
 
 h1 {
@@ -31,6 +32,7 @@ textarea {
 	margin-right: auto;
 	margin-top: 10px;
 	width: 50%;
+	min-width: 500px;
 	color: #f00;
 }
 
@@ -52,6 +54,7 @@ textarea {
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
+	min-width: 500px;
 }
 
 #intro {
