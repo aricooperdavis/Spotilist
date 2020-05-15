@@ -159,7 +159,7 @@ if (access_token && (state == null || state !== storedState)) {
 									}),
 									success: function(response3) {
 										printToOutput("[OK] Added tracks to playlist.");
-										window.open(playlist_url);
+										window.location(playlist_url);
 										printToOutput("[OK] Opening new playlist...");
 									},
 									error: function(response3){

@@ -34,12 +34,24 @@ textarea {
 	color: #f00;
 }
 
+#header_link {
+	color: unset;
+	text-decoration: unset;
+}
+
 #subtitle {
 	text-align: center;
 	font-style: italic;
 	font-size: 0.9em;
 	margin: 0;
 	padding-bottom: 5px;
+}
+
+#foldable {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
 }
 
 #intro {
