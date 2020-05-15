@@ -1,16 +1,16 @@
-# BBC Spotilist
+# Spotilist
 *Create a spotify playlist from a BBC Sounds episode*
 
-[BBC Spotilist](https://aricooperdavis.github.io/BBC-Spotilist) is a site, written in JavaScript, that automates the creation of new Spotify playlists containing tracks listed on a BBC Sounds episode.
+[Spotilist](https://aricooperdavis.github.io/Spotilist) is a site, written in JavaScript, that automates the creation of new Spotify playlists containing tracks listed on a BBC Sounds episode.
 
 ![Screenshot of the User Interface](resources/screenshot.png)
 
 ## Get Started
 ### Online Demo Site
-Try out the [fully functional demo-site](https://aricooperdavis.github.io/BBC-Spotilist/) built from this repository and running on GitHub pages. Note, however, that the demo site is using the [demo implementation of CORS Anywhere](https://github.com/Rob--W/cors-anywhere/#demo-server), which has strict service limits.
+Try out the [fully functional demo-site](https://aricooperdavis.github.io/Spotilist/) built from this repository and running on GitHub pages. Note, however, that the demo site is using the [demo implementation of CORS Anywhere](https://github.com/Rob--W/cors-anywhere/#demo-server), which has strict service limits.
 
 ### Host Locally
-Clone the repository and navigate into the main folder. Modify [lines 70 and 71 in bbcspotilist.alpha.js](https://github.com/aricooperdavis/BBC-Spotilist/blob/master/bbcspotilist.alpha.js#L70) so that the `redirect_uri` is your localhost, and start an http server. Any server will do, but my favourite is:
+Clone the repository and navigate into the main folder. Modify [lines 70 and 71 in spotilist.alpha.js](https://github.com/aricooperdavis/Spotilist/blob/master/spotilist.alpha.js#L70) so that the `redirect_uri` is your localhost, and start an http server. Any server will do, but my favourite is:
 
 `python -m http.server`
 
@@ -25,7 +25,7 @@ As mentioned, it's currently coded to use the [demo implementation of CORS Anywh
 If you would like to build on this project then you should also consider registering a [spotify developer client ID](https://developer.spotify.com/dashboard/applications) so that you're not using mine all the time.
 
 ## Contributing
-Please do - by filing any [issues](https://github.com/aricooperdavis/BBC-Spotilist/issues) you encounter or any [enhancements](https://github.com/aricooperdavis/BBC-Spotilist/labels/enhancement) you can think of, or even better by coding up those improvements yourself and making a [pull request](https://github.com/aricooperdavis/BBC-Spotilist/pulls).
+Please do - by filing any [issues](https://github.com/aricooperdavis/Spotilist/issues) you encounter or any [enhancements](https://github.com/aricooperdavis/Spotilist/labels/enhancement) you can think of, or even better by coding up those improvements yourself and making a [pull request](https://github.com/aricooperdavis/Spotilist/pulls).
 
 ## Acknowledgements
 Many thanks to the developers of [CORS Anywhere](https://github.com/Rob--W/cors-anywhere/) and [jQuery](https://github.com/jquery/jquery) whos exceptional hard work made this project simple.
