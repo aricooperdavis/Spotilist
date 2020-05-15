@@ -4,12 +4,30 @@ var outputBox = document.getElementById('outputBox');
 
 // ----------------- Helper Functions --------------------------
 
-function urlParse(e) {
+function urlTest() {
 	/* Parse url in input box */
-	console.log(e);
+	var urlAttempt = urlInput.value;
+	regex = /^(https:\/\/|)(http:\/\/|)(www\.bbc\.co.uk\/)(sounds\/play\/|programmes\/).{8}$/g;
+	match = urlAttempt.match(regex);
+	/* Colour entry box based on url validity */
+	if (match == null) {
+		urlInput.style.outlineColor = "red";
+		urlSubmit.disabled = true;
+		urlSubmit.style.opacity = 0.4;
+	} else {
+		urlInput.style.outlineColor = "green";
+		urlSubmit.disabled = false;
+		urlSubmit.style.opacity = 1;
+	};
 };
 
 // ----------------- Copied Functions --------------------------
+
+function printToOutput(message) {
+	/* Append message to output box and scroll to bottom */
+	outputBox.value += message+"\n";
+	outputBox.scrollTop = outputBox.scrollHeight;
+}
 
 function getHashParams() {
 	/* Parse hash in returned uri address */
@@ -50,6 +68,7 @@ function startProcess() {
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
   var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
+	// var redirect_uri = 'http://localhost:8000';
 
   var state = generateRandomString(16);
 
@@ -71,7 +90,7 @@ function startProcess() {
 
 /* If an access token has been given then we must have attempted authentication */
 if (access_token && (state == null || state !== storedState)) {
-  outputBox.value += "[ERROR] Failed Spotify authentication - please try again.\n";
+  printToOutput("[ERROR] Failed Spotify authentication - please try again.");
 } else {
   localStorage.removeItem(stateKey);
 	localStorage.removeItem(inputText);
@@ -84,26 +103,30 @@ if (access_token && (state == null || state !== storedState)) {
       },
       success: function(response) {
 				var user_id = response['id'];
-        outputBox.value += "[OK] Authenticated as Spotify User: "+response['display_name']+".\n";
+        printToOutput("[OK] Authenticated as Spotify User: "+response['display_name']);
+
+				/* Convert input url if necessary */
+				var urlParts = urlInput.value.split("/");
+				var soundUrl = "https://www.bbc.co.uk/sounds/play/"+urlParts[urlParts.length-1];
 
 				/* Parse episode source from BBC Sounds */
 				$.ajax({
-					url: "https://cors-anywhere.herokuapp.com/"+urlInput.value,
+					url: "https://cors-anywhere.herokuapp.com/"+soundUrl,
 					success: function(response1) {
 						/* Extract spotify uris*/
 						var regex = /<title>.*<\/title>/g;
 						var title = response1.match(regex)[0].slice(7, -8);
-						outputBox.value += "[OK] Found episode: "+title+"\n";
+						printToOutput("[OK] Found episode: "+title);
 						var regex = /<span class="sc-c-basic-tile__track-number gs-u-display-inline-block gel-pica-bold gs-u-ml0@m">/g
 						var track_count = response1.match(regex).length;
-						outputBox.value += "[OK] Found associated tracks: "+track_count+"\n";
+						printToOutput("[OK] Found associated tracks: "+track_count);
 						var regex = /[^"]*(open.spotify.com)[^"]*/g;
 						var links = response1.match(regex);
 						var track_uris = [];
 						for (var i in links) {
 							track_uris.push("spotify:track:"+links[i].split("/")[4]);
 						};
-						outputBox.value += "[OK] Found tracks on Spotify: "+track_uris.length+"\n";
+						printToOutput("[OK] Found tracks on Spotify: "+track_uris.length);
 
 						/* Create a playlist to put the tracks in */
 						$.ajax({
@@ -121,7 +144,7 @@ if (access_token && (state == null || state !== storedState)) {
 							success: function(response2) {
 								var playlist_url = response2['external_urls']['spotify'];
 								var playlist_id = response2['id'];
-								outputBox.value += "[OK] Created new empty playlist: "+playlist_url+"\n";
+								printToOutput("[OK] Created new empty playlist: "+playlist_url);
 
 								/* Populate playlist with tracks */
 								$.ajax({
@@ -135,12 +158,12 @@ if (access_token && (state == null || state !== storedState)) {
 										uris: track_uris
 									}),
 									success: function(response3) {
-										outputBox.value += "[OK] Added tracks to playlist.\n";
+										printToOutput("[OK] Added tracks to playlist.");
 										window.open(playlist_url);
-										outputBox.value += "[OK] Opening new playlist..."
+										printToOutput("[OK] Opening new playlist...");
 									},
 									error: function(response3){
-										outputBox.value += "[ERROR] Failed to add tracks to playlist.\n";
+										printToOutput("[ERROR] Failed to add tracks to playlist.");
 										console.log(response3);
 									}
 								});
@@ -148,14 +171,14 @@ if (access_token && (state == null || state !== storedState)) {
 							},
 							error: function(response2) {
 								console.log(response2);
-								outputBox.value += "[ERROR] Failed to create Spotify playlist.\n";
+								printToOutput("[ERROR] Failed to create Spotify playlist.");
 							}
 
 						});
 					},
 					error: function(response1) {
 						console.log(response1);
-						outputBox.value += "[ERROR] Cannot find that BBC Sounds Episode.\n";
+						printToOutput("[ERROR] Cannot find that BBC Sounds Episode.");
 					}
 				});
 
@@ -165,5 +188,5 @@ if (access_token && (state == null || state !== storedState)) {
   }
 }
 
-	urlInput.addEventListener("change", urlParse, false);
+	urlInput.addEventListener("input", urlTest, false);
 	urlSubmit.addEventListener("click", startProcess, false);

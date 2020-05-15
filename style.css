@@ -58,6 +58,10 @@ textarea {
 	width: 40%;
 }
 
+#urlSubmit {
+	opacity: 0.4;
+}
+
 .button {
 	color: #333;
 	background: #fff;
