@@ -128,7 +128,7 @@ if (access_token && (state == null || state !== storedState)) {
 						var regex = /<title>.*<\/title>/g;
 						var title = response1.match(regex)[0].slice(7, -8);
 						printToOutput("[OK] Found episode: "+title);
-						var regex = /<span class="sc-c-basic-tile__track-number gs-u-display-inline-block gel-pica-bold gs-u-ml0@m">/g
+						var regex = /ml0@m/g
 						var track_count = response1.match(regex).length;
 						printToOutput("[OK] Found associated tracks: "+track_count);
 						var regex = /[^"]*(open.spotify.com)[^"]*/g;
