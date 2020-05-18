@@ -52,8 +52,8 @@ function getSpotifyAuth() {
 	/* Authenticate with Spotify */
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
-  // var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
-	var redirect_uri = 'http://localhost:8000';
+  var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
+	// var redirect_uri = 'http://localhost:8000';
 
   var state = generateRandomString(16);
 
@@ -68,7 +68,7 @@ function getSpotifyAuth() {
   url += '&state=' + encodeURIComponent(state);
 
 	// Backup text box data
-	localStorage.setItem(inputText, urlInput.value);
+	localStorage.setItem('inputText', urlInput.value);
 
 	// Open spotify's URl, thereby leaving the site
   window.location = url;
@@ -93,17 +93,18 @@ var params = getHashParams();
 var access_token = params.access_token,
     state = params.state,
     storedState = localStorage.getItem(stateKey);
-		urlInput.value = localStorage.getItem(inputText)
 
-// Set-up other
-var inputText = null;
+// Set-up other values that need to survive redirects
+urlInput.value = localStorage.getItem('inputText');
+localStorage.removeItem('inputText');
 
 // If an access token has been given then we must have attempted authentication
 if (access_token && (state == null || state !== storedState)) {
   printToOutput("[ERROR] Failed Spotify authentication - please try again.");
 } else {
+	// Remove auth stateKey once authorisation has been issued
   localStorage.removeItem(stateKey);
-	localStorage.removeItem(inputText);
+
   if (access_token) {
 		// Make a call to the `me` endpoint to get logged in user details
     $.ajax({

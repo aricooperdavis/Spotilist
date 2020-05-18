@@ -7,8 +7,6 @@ html {
 }
 
 body{
-	background: #eee5;
-	border: 2px solid;
 	padding: 20px 20px 1px 20px;
 	border-radius: 10px;
 	min-width: 500px;
@@ -26,14 +24,43 @@ img {
 	width: 75px;
 }
 
-textarea {
+main {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 10px;
-	width: 50%;
+	width: 70%;
 	min-width: 500px;
-	color: #f00;
+	max-width: 750px;
+	text-align: center;
+}
+
+footer {
+	padding-top: 10px;
+	font-size:.8em;
+	color: #777;
+	text-align: center;
+}
+
+ol {
+	text-align: left;
+}
+
+.button {
+	color: #333;
+	background: #fff;
+	border: 1px solid #222;
+	border-radius: 3px;
+	margin: 0px 5px;
+	padding: 5px;
+	font-size: 1em;
+}
+
+.button:active {
+	background: #ddd;
+}
+
+.button:hover, button:focus {
+	box-shadow: 0 0 2px #222;
 }
 
 #header_link {
@@ -49,56 +76,32 @@ textarea {
 	padding-bottom: 5px;
 }
 
-#foldable {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 50%;
-	min-width: 500px;
-}
-
 #intro {
 	padding-bottom: 10px;
 }
 
-#instructions {
-	margin-top: -10px;
-}
-
 #buttons {
 	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 #urlInput {
-	width: 40%;
+	width: 50%;
+	min-width: 300px;
 }
 
 #urlSubmit {
 	opacity: 0.4;
 }
 
-.button {
-	color: #333;
-	background: #fff;
-	border: 1px solid #222;
-	border-radius: 3px;
-	margin: 0px 5px;
-	padding: 5px;
-	transition: .3s;
-	font-size: 1em;
-}
-
-.button:active {
-	background: #ddd;
-}
-
-.button:hover, button:focus {
-	box-shadow: 0 0 2px #222;
-}
-
-footer {
-	padding-top: 10px;
-	font-size:.8em;
-	color: #777;
-	text-align: center;
+#outputBox {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 90%;
+	min-width: 500px;
+	color: #f00;
 }
