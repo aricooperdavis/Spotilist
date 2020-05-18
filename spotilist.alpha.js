@@ -1,7 +1,3 @@
-var urlInput = document.getElementById('urlInput');
-var urlSubmit = document.getElementById('urlSubmit');
-var outputBox = document.getElementById('outputBox');
-
 // ----------------- Helper Functions --------------------------
 
 function urlTest() {
@@ -9,7 +5,8 @@ function urlTest() {
 	var urlAttempt = urlInput.value;
 	regex = /^(https:\/\/|)(http:\/\/|)(www\.bbc\.co.uk\/)(sounds\/play\/|programmes\/).{8}$/g;
 	match = urlAttempt.match(regex);
-	/* Colour entry box based on url validity */
+
+	// Colour entry box based on url validity
 	if (match == null) {
 		urlInput.style.outlineColor = "red";
 		urlSubmit.disabled = true;
@@ -27,7 +24,7 @@ function printToOutput(message) {
 	outputBox.scrollTop = outputBox.scrollHeight;
 }
 
-// ----------------- Spotify GitHub Code --------------------------
+// ----------------- Spotify Authentication Code --------------------------
 
 function getHashParams() {
 	/* Parse hash in returned uri address */
@@ -51,26 +48,12 @@ function generateRandomString(length) {
   return text;
 };
 
-/* Set-up authentication states for spotify request */
-var stateKey = 'spotify_auth_state';
-var outputLog = null;
-var params = getHashParams();
-var inputText = null;
-
-var access_token = params.access_token,
-    state = params.state,
-    storedState = localStorage.getItem(stateKey);
-		urlInput.value = localStorage.getItem(inputText)
-
-// ----------------- Main Process --------------------------
-
-function startProcess() {
-
+function getSpotifyAuth() {
 	/* Authenticate with Spotify */
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
-  var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
-	// var redirect_uri = 'http://localhost:8000';
+  // var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
+	var redirect_uri = 'http://localhost:8000';
 
   var state = generateRandomString(16);
 
@@ -87,17 +70,42 @@ function startProcess() {
 	// Backup text box data
 	localStorage.setItem(inputText, urlInput.value);
 
+	// Open spotify's URl, thereby leaving the site
   window.location = url;
+	// We get redirected back here by Spotify after authentication
 };
 
-/* If an access token has been given then we must have attempted authentication */
+// ----------------- Code runs on load --------------------------
+
+// Tie vars to document elements
+var urlInput = document.getElementById('urlInput');
+var urlSubmit = document.getElementById('urlSubmit');
+var outputBox = document.getElementById('outputBox');
+
+// Tie functions to event listeners on elements
+urlInput.addEventListener("input", urlTest, false);
+urlSubmit.addEventListener("click", getSpotifyAuth, false);
+
+// Set-up state for spotify authentication
+var stateKey = 'spotify_auth_state';
+var params = getHashParams();
+
+var access_token = params.access_token,
+    state = params.state,
+    storedState = localStorage.getItem(stateKey);
+		urlInput.value = localStorage.getItem(inputText)
+
+// Set-up other
+var inputText = null;
+
+// If an access token has been given then we must have attempted authentication
 if (access_token && (state == null || state !== storedState)) {
   printToOutput("[ERROR] Failed Spotify authentication - please try again.");
 } else {
   localStorage.removeItem(stateKey);
 	localStorage.removeItem(inputText);
   if (access_token) {
-		/* Make a call to the `me` endpoint to get logged in user details */
+		// Make a call to the `me` endpoint to get logged in user details
     $.ajax({
       url: 'https://api.spotify.com/v1/me',
       headers: {
@@ -107,15 +115,15 @@ if (access_token && (state == null || state !== storedState)) {
 				var user_id = response['id'];
         printToOutput("[OK] Authenticated as Spotify User: "+response['display_name']);
 
-				/* Convert input url if necessary */
+				// Convert input url if necessary
 				var urlParts = urlInput.value.split("/");
 				var soundUrl = "https://www.bbc.co.uk/sounds/play/"+urlParts[urlParts.length-1];
 
-				/* Parse episode source from BBC Sounds */
+				// Parse episode source from BBC Sounds
 				$.ajax({
 					url: "https://cors-anywhere.herokuapp.com/"+soundUrl,
 					success: function(response1) {
-						/* Extract spotify uris*/
+						// Extract spotify uris
 						var regex = /<title>.*<\/title>/g;
 						var title = response1.match(regex)[0].slice(7, -8);
 						printToOutput("[OK] Found episode: "+title);
@@ -130,7 +138,7 @@ if (access_token && (state == null || state !== storedState)) {
 						};
 						printToOutput("[OK] Found tracks on Spotify: "+track_uris.length);
 
-						/* Create a playlist to put the tracks in */
+						// Create a playlist to put the tracks in
 						$.ajax({
 							url: "https://api.spotify.com/v1/users/"+user_id+"/playlists",
 							type: "POST",
@@ -148,7 +156,7 @@ if (access_token && (state == null || state !== storedState)) {
 								var playlist_id = response2['id'];
 								printToOutput("[OK] Created new empty playlist: "+playlist_url);
 
-								/* Populate playlist with tracks */
+								// Populate playlist with tracks
 								$.ajax({
 									url: "https://api.spotify.com/v1/playlists/"+playlist_id+"/tracks",
 									type: "POST",
@@ -189,6 +197,3 @@ if (access_token && (state == null || state !== storedState)) {
 
   }
 }
-
-	urlInput.addEventListener("input", urlTest, false);
-	urlSubmit.addEventListener("click", startProcess, false);
