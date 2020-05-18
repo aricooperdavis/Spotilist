@@ -129,10 +129,23 @@ if (access_token && (state == null || state !== storedState)) {
 						var title = response1.match(regex)[0].slice(7, -8);
 						printToOutput("[OK] Found episode: "+title);
 						var regex = /ml0@m/g
-						var track_count = response1.match(regex).length;
-						printToOutput("[OK] Found associated tracks: "+track_count);
+						var tracks = response1.match(regex)
+
+						if (tracks == null) {
+							printToOutput("[ERROR] Cannot find any associated tracks.");
+							return undefined;
+						};
+
+						var track_count = track_match.length;
+						printToOutput("[OK] Found associated tracks: "+tracks.length);
 						var regex = /[^"]*(open.spotify.com)[^"]*/g;
 						var links = response1.match(regex);
+
+						if (links == null) {
+							printToOutput("[ERROR] Cannot find any tracks on spotify.");
+							return undefined;
+						}
+
 						var track_uris = [];
 						for (var i in links) {
 							track_uris.push("spotify:track:"+links[i].split("/")[4]);
