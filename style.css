@@ -114,8 +114,8 @@ ol {
 }
 
 #playlistDescriptionInput {
-	min-width: 500px;
-	padding: 0 5px;
+	min-width: 445px;
+	padding: 5px;
 }
 
 #outputBox {
@@ -125,6 +125,6 @@ ol {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	width: 90%;
-	min-width: 500px;
+	min-width: 450px;
 	color: #f00;
 }
