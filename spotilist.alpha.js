@@ -24,6 +24,14 @@ function printToOutput(message) {
 	outputBox.scrollTop = outputBox.scrollHeight;
 }
 
+function htmlDecode(input){
+	/* Decode's html that contains unicode characters
+	source: https://stackoverflow.com/a/2808386/6144626 */
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes[0].nodeValue;
+}
+
 // ----------------- Spotify Authentication Code --------------------------
 
 function getHashParams() {
@@ -138,7 +146,7 @@ if (access_token && (state == null || state !== storedState)) {
 					success: function(response1) {
 						// Extract spotify uris
 						var regex = /<title>.*<\/title>/g;
-						var title = response1.match(regex)[0].slice(7, -8);
+						var title = htmlDecode(response1.match(regex)[0].slice(7, -8));
 						printToOutput("[OK] Found episode: "+title);
 						var regex = /ml0@m/g
 						var tracks = response1.match(regex)
