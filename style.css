@@ -89,10 +89,33 @@ ol {
 #urlInput {
 	width: 50%;
 	min-width: 300px;
+	margin-left: 5px;
+	padding: 0 5px;
 }
 
 #urlSubmit {
 	opacity: 0.4;
+}
+
+#details-content {
+	background: #eee5;
+	margin: 10px;
+	padding: 10px;
+}
+
+#summary {
+	background: #fff;
+	margin-bottom: 5px;
+}
+
+#playlistTitleInput {
+	min-width: 300px;
+	padding: 0 5px;
+}
+
+#playlistDescriptionInput {
+	min-width: 500px;
+	padding: 0 5px;
 }
 
 #outputBox {
