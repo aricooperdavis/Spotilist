@@ -115,7 +115,7 @@ ol {
 
 #playlistDescriptionInput {
 	min-width: 445px;
-	padding: 5px;
+	padding: 0 5px;
 }
 
 #outputBox {
