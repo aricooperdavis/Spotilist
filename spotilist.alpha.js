@@ -15,6 +15,7 @@ function urlTest() {
 		urlInput.style.outlineColor = "green";
 		urlSubmit.disabled = false;
 		urlSubmit.style.opacity = 1;
+		urlSubmit.innerHTML = "Go!";
 	};
 };
 
@@ -112,7 +113,7 @@ var access_token = params.access_token,
 urlInput.value = localStorage.getItem('inputText');
 titleInput.value = localStorage.getItem('titleText');
 descriptionInput.value = localStorage.getItem('descriptionText');
-details.open = localStorage.getItem('details');
+details.open = (localStorage.getItem('details') == 'true');
 localStorage.removeItem('inputText');
 localStorage.removeItem('titleText');
 localStorage.removeItem('descriptionText');
@@ -121,11 +122,14 @@ localStorage.removeItem('details');
 // If an access token has been given then we must have attempted authentication
 if (access_token && (state == null || state !== storedState)) {
   printToOutput("[ERROR] Failed Spotify authentication - please try again.");
+	details.open = true;
+	urlSubmit.innerHTML = "Error!";
 } else {
 	// Remove auth stateKey once authorisation has been issued
   localStorage.removeItem(stateKey);
 
   if (access_token) {
+		urlSubmit.innerHTML = "Wait...";
 		// Make a call to the `me` endpoint to get logged in user details
     $.ajax({
       url: 'https://api.spotify.com/v1/me',
@@ -212,6 +216,7 @@ if (access_token && (state == null || state !== storedState)) {
 									}),
 									success: function(response3) {
 										printToOutput("[OK] Added tracks to playlist.");
+										urlSubmit.innerHTML = "Go!";
 										window.location = playlist_url;
 										printToOutput("[OK] Opening new playlist...");
 									},
