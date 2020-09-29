@@ -152,7 +152,7 @@ if (access_token && (state == null || state !== storedState)) {
 						var regex = /<title>.*<\/title>/g;
 						var title = htmlDecode(response1.match(regex)[0].slice(7, -8));
 						printToOutput("[OK] Found episode: "+title);
-						var regex = /ml0@m/g
+						var regex = /sc-c-basic-tile__track-number/g
 						var tracks = response1.match(regex)
 
 						if (tracks == null) {
