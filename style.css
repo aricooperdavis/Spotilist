@@ -9,7 +9,7 @@ html {
 }
 
 body{
-	padding: 5vw 5vw 0vw 5vw;
+	padding: 0vw 5vw 0vw 5vw;
 }
 
 /* Header stuff */
@@ -114,4 +114,35 @@ main {
 #outputBox {
 	margin: 10px auto;
 	color: #f00;
+}
+
+/* Media queries */
+
+@media (prefers-color-scheme: dark) {
+  
+  html {
+    background: #333;
+  }
+
+  p, div {
+    color: #eee;
+  }
+  
+  #summary {
+    background: #333;
+    color: #dfd;
+  }
+  
+  a {
+    color: #dfd;
+  }
+  
+  input, textarea {
+    background: #ddd;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    color: black;
+  }
+  
 }
