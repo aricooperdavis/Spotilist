@@ -62,7 +62,7 @@ function getSpotifyAuth() {
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
   var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
-	// var redirect_uri = 'http://localhost:8000';
+  //var redirect_uri = 'http://localhost:8000';
 
   var state = generateRandomString(16);
 
@@ -172,7 +172,12 @@ if (access_token && (state == null || state !== storedState)) {
 
 						var track_uris = [];
 						for (var i in links) {
-							track_uris.push("spotify:track:"+links[i].split("/")[4]);
+							var this_uri = "spotify:track:"+links[i].split("/")[4];
+							// Don't duplicate songs in the playlist
+							if (!track_uris.includes(this_uri)) {
+								track_uris.push(this_uri); 
+							}
+							
 						};
 						printToOutput("[OK] Found tracks on Spotify: "+track_uris.length);
 
