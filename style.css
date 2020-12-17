@@ -1,38 +1,40 @@
+/* Overarching layout stuff */
+
 html {
 	background:#fff;
 	margin: 2.5% auto;
-	width:95%;
+	width:95vw;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.9em;
 }
 
 body{
-	padding: 20px 20px 1px 20px;
-	border-radius: 10px;
-	min-width: 500px;
+	padding: 5vw 5vw 0vw 5vw;
 }
 
-h1 {
-	text-align: center;
-	margin: 0;
-}
+/* Header stuff */
 
-img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+#logo {
 	width: 75px;
 }
 
-main {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 70%;
-	min-width: 500px;
-	max-width: 750px;
+#title > * {
+	margin: 5px auto 5px auto;
 	text-align: center;
+	display: block;
 }
+
+#header_link {
+	color: unset;
+	text-decoration: unset;
+}
+
+#subtitle {
+	font-style: italic;
+	font-size: 0.9em;
+}
+
+/* Footer stuff */
 
 footer {
 	padding-top: 10px;
@@ -41,8 +43,20 @@ footer {
 	text-align: center;
 }
 
-ol {
-	text-align: left;
+/* Main content stuff */
+
+main {
+	margin-left: auto;
+	margin-right: auto;
+	width: 70vw;
+	max-width: 800px;
+	text-align: center;
+}
+
+#buttons {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .button {
@@ -63,32 +77,9 @@ ol {
 	box-shadow: 0 0 2px #222;
 }
 
-#header_link {
-	color: unset;
-	text-decoration: unset;
-}
-
-#subtitle {
-	text-align: center;
-	font-style: italic;
-	font-size: 0.9em;
-	margin: 0;
-	padding-bottom: 5px;
-}
-
-#intro {
-	padding-bottom: 10px;
-}
-
-#buttons {
-	text-align: center;
-	margin-top: 10px;
-	margin-bottom: 20px;
-}
-
 #urlInput {
-	width: 45%;
-	min-width: 280px;
+	width: 40vw;
+	max-width: 600px;
 	margin-left: 5px;
 	padding: 0 5px;
 }
@@ -97,10 +88,16 @@ ol {
 	opacity: 0.4;
 }
 
+/* Instructions & More Options */
+
 #details-content {
 	background: #eee5;
 	margin: 10px;
-	padding: 10px;
+	padding: 10px 20px;
+}
+
+#details-content > * {
+	text-align: left;
 }
 
 #summary {
@@ -108,23 +105,13 @@ ol {
 	margin-bottom: 5px;
 }
 
-#playlistTitleInput {
-	min-width: 300px;
-	padding: 0 5px;
-}
-
-#playlistDescriptionInput {
-	min-width: 445px;
+#details-content > input, textarea {
+	width: 45vw;
+	max-width: 600px;
 	padding: 0 5px;
 }
 
 #outputBox {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	width: 90%;
-	min-width: 450px;
+	margin: 10px auto;
 	color: #f00;
 }
