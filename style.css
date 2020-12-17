@@ -2,8 +2,8 @@
 
 html {
 	background:#fff;
-	margin: 2.5% auto;
-	width:95vw;
+	margin: 10vh auto;
+	width: 95vw;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 0.9em;
 }
@@ -78,7 +78,7 @@ main {
 }
 
 #urlInput {
-	width: 40vw;
+	width: 31vw;
 	max-width: 600px;
 	margin-left: 5px;
 	padding: 0 5px;
@@ -145,4 +145,13 @@ main {
     color: black;
   }
   
+}
+
+@media (max-width: 500px) {
+	html {
+		width: 100vw;
+	}
+  main {
+    width: 85vw;
+  }
 }
