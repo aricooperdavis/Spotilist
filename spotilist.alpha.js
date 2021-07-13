@@ -146,7 +146,7 @@ if (access_token && (state == null || state !== storedState)) {
 
 				// Parse episode source from BBC Sounds
 				$.ajax({
-					url: "https://cors-anywhere.herokuapp.com/"+soundUrl,
+					url: "https://api.allorigins.win/raw?url="+soundUrl,
 					success: function(response1) {
 						// Extract spotify uris
 						var regex = /<title>.*<\/title>/g;
@@ -175,9 +175,9 @@ if (access_token && (state == null || state !== storedState)) {
 							var this_uri = "spotify:track:"+links[i].split("/")[4];
 							// Don't duplicate songs in the playlist
 							if (!track_uris.includes(this_uri)) {
-								track_uris.push(this_uri); 
+								track_uris.push(this_uri);
 							}
-							
+
 						};
 						printToOutput("[OK] Found tracks on Spotify: "+track_uris.length);
 
