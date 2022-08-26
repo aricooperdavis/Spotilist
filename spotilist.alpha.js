@@ -62,7 +62,7 @@ function getSpotifyAuth() {
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
   var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
-  //var redirect_uri = 'http://localhost:8000';
+  // var redirect_uri = 'http://localhost:8000';
 
   var state = generateRandomString(16);
 
@@ -148,37 +148,42 @@ if (access_token && (state == null || state !== storedState)) {
 				$.ajax({
 					url: "https://api.allorigins.win/raw?url="+soundUrl,
 					success: function(response1) {
-						// Extract spotify uris
-						var regex = /<title>.*<\/title>/g;
-						var title = htmlDecode(response1.match(regex)[0].slice(7, -8));
-						printToOutput("[OK] Found episode: "+title);
-						var regex = /sc-c-basic-tile__track-number/g
-						var tracks = response1.match(regex)
+						// Parse response
+						let parser = new DOMParser();
+						response1 = parser.parseFromString(response1, 'text/html');
+						Array.from(response1.getElementsByTagName('script')).forEach(e => {
+							if (e.innerHTML.startsWith(' window.__PRELOADED_STATE__')) {
+								response1 = JSON.parse(e.innerHTML.split(' = ').slice(1).join("").split("; ")[0]);
+							}
+						});
 
+						// Extract useful bits
+						let title = Object.values(response1.programmes.current.titles).slice(0,2).join(" - ");
+						printToOutput("[OK] Found episode: "+title);
+						
+						var tracks = response1.tracklist.tracks;
 						if (tracks == null) {
 							printToOutput("[ERROR] Cannot find any associated tracks.");
 							return undefined;
 						};
-
 						var track_count = tracks.length;
 						printToOutput("[OK] Found associated tracks: "+tracks.length);
-						var regex = /[^"]*(open.spotify.com)[^"]*/g;
-						var links = response1.match(regex);
-
+						
+						let links = tracks.filter(t => {
+							return Object.values(t.uris).some(u => {
+								return u.label == "Spotify";
+							});
+						});
 						if (links == null) {
 							printToOutput("[ERROR] Cannot find any tracks on spotify.");
 							return undefined;
 						}
 
-						var track_uris = [];
-						for (var i in links) {
-							var this_uri = "spotify:track:"+links[i].split("/")[4];
-							// Don't duplicate songs in the playlist
-							if (!track_uris.includes(this_uri)) {
-								track_uris.push(this_uri);
-							}
-
-						};
+						let track_uris = links.map(t => {
+							return 'spotify:track:'+t.uris.filter(u => {
+								return u.label == 'Spotify';
+							})[0].uri.split('/')[4];
+						}).flat();
 						printToOutput("[OK] Found tracks on Spotify: "+track_uris.length);
 
 						// Create a playlist to put the tracks in
