@@ -62,7 +62,7 @@ function getSpotifyAuth() {
 
   var client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
   var redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
-  // var redirect_uri = 'http://localhost:8000';
+  //var redirect_uri = 'http://localhost:8000';
 
   var state = generateRandomString(16);
 
@@ -153,7 +153,7 @@ if (access_token && (state == null || state !== storedState)) {
 						response1 = parser.parseFromString(response1, 'text/html');
 						Array.from(response1.getElementsByTagName('script')).forEach(e => {
 							if (e.innerHTML.startsWith(' window.__PRELOADED_STATE__')) {
-								response1 = JSON.parse(e.innerHTML.split(' = ').slice(1).join("").split("; ")[0]);
+								response1 = JSON.parse(e.innerHTML.trim().slice(29,-1)); // Liable to break
 							}
 						});
 
@@ -175,7 +175,7 @@ if (access_token && (state == null || state !== storedState)) {
 							});
 						});
 						if (links == null) {
-							printToOutput("[ERROR] Cannot find any tracks on spotify.");
+							printToOutput("[ERROR] Cannot find any tracks.");
 							return undefined;
 						}
 
@@ -184,6 +184,10 @@ if (access_token && (state == null || state !== storedState)) {
 								return u.label == 'Spotify';
 							})[0].uri.split('/')[4];
 						}).flat();
+						if (track_uris.length < 1) {
+							printToOutput("[ERROR] Cannot find any tracks on Spotify.");
+							return undefined;
+						}
 						printToOutput("[OK] Found tracks on Spotify: "+track_uris.length);
 
 						// Create a playlist to put the tracks in
