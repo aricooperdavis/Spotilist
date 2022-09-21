@@ -9,13 +9,13 @@
 ### Online Demo Site
 Try out the [fully functional demo-site](https://aricooperdavis.github.io/Spotilist/) built from this repository and running on GitHub pages.
 
-The demo site uses the [public implementation of All Origins](https://github.com/gnuns/allOrigins). If you are thinking of hosting this yourself then consider spinning up your own CORS Proxy rather than relying on this free service.
+The demo site uses the [public implementation of All Origins](https://github.com/gnuns/allOrigins). If you are thinking of hosting this yourself then consider spinning up your own CORS proxy rather than relying on this free service.
 
 ### Host your own
 I encourage you to host your own instance of this tool, so that you can build upon it and play with it! It's easy, just:
 
 1. Clone the repository
-2. Modify [lines 64 and 65 in spotilist.alpha.js](https://github.com/aricooperdavis/Spotilist/blob/master/spotilist.alpha.js#L64) so that the `redirect_uri` is appropriate. By default it points back to the demo site at [`spotilist.cooper-davis.net`](spotilist.cooper-davis.net) but if you're hosting it locally you will want to change this to `localhost` and the appropriate port.
+2. Modify [lines 70 and 71 in spotilist.alpha.js](https://github.com/aricooperdavis/Spotilist/blob/master/spotilist.alpha.js#L70) so that the `redirect_uri` is appropriate. By default it points back to the demo site at [`spotilist.cooper-davis.net`](spotilist.cooper-davis.net) but if you're hosting it locally you will want to change this to `localhost` and the appropriate port.
 3. Host it. Any server will do, such as Python's:
 
     `python -m http.server`
@@ -24,7 +24,7 @@ I encourage you to host your own instance of this tool, so that you can build up
 
 4. Host your own [All Origins Server](https://github.com/gnuns/allOrigins#on-your-own-server) so that you're not relying on the public version.
 
-5. Register for a [spotify developer client ID](https://developer.spotify.com/dashboard/applications) so that you're not using mine all the time. You will need to modify [Line 63 of `spotilis.alpha.js`](https://github.com/aricooperdavis/Spotilist/blob/master/bbcspotilist.alpha.js#L63) to replace my client ID with yours. Note that you will need to [whitelist the redirect URI on your Spotify dashboard](https://developer.spotify.com/documentation/general/guides/app-settings/).
+5. Register for a [spotify developer client ID](https://developer.spotify.com/dashboard/applications) so that you're not using mine all the time. You will need to modify [Line 69 of `spotilis.alpha.js`](https://github.com/aricooperdavis/Spotilist/blob/master/bbcspotilist.alpha.js#L63) to replace my client ID with yours. Note that you will need to [whitelist the redirect URI on your Spotify dashboard](https://developer.spotify.com/documentation/general/guides/app-settings/).
 
 ## Contributing
 Please do - by filing any [issues](https://github.com/aricooperdavis/Spotilist/issues) you encounter or any [enhancements](https://github.com/aricooperdavis/Spotilist/labels/enhancement) you can think of, or even better by coding up those improvements yourself and making a [pull request](https://github.com/aricooperdavis/Spotilist/pulls).

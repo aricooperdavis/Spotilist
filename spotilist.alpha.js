@@ -1,23 +1,29 @@
 // ----------------- Helper Functions --------------------------
 
-function urlTest() {
+function urlTest(urlAttempt) {
 	/* Parse url in input box */
-	var urlAttempt = urlInput.value;
-	regex = /^(https:\/\/|)(http:\/\/|)(www\.bbc\.co.uk\/)(sounds\/play\/|programmes\/).{8}$/g;
-	match = urlAttempt.match(regex);
+	if (typeof(urlAttempt) != 'string') {
+		urlAttempt = urlInput.value;
+	}
+	let regex = /^(?:https:\/\/|)(?:http:\/\/|)(?:www\.bbc\.co.uk\/)(?:sounds\/play\/|programmes\/)(.{8})(?:\?.*|)$/;
+	let match = urlAttempt.match(regex);
 
 	// Colour entry box based on url validity
 	if (match == null) {
-		urlInput.style.outlineColor = "red";
+		urlInput.className = "invalid";
+		urlSubmit.className = "invalid";
 		urlSubmit.disabled = true;
-		urlSubmit.style.opacity = 0.4;
 	} else {
-		urlInput.style.outlineColor = "green";
+		urlInput.className = "valid";
+		urlSubmit.className = "valid";
 		urlSubmit.disabled = false;
-		urlSubmit.style.opacity = 1;
 		urlSubmit.innerHTML = "Go!";
-	};
-};
+
+		match = match[1];
+	}
+
+	return match;
+}
 
 function printToOutput(message) {
 	/* Append message to output box and scroll to bottom */
@@ -40,7 +46,7 @@ function getHashParams() {
 	var hashParams = {};
 	var e, r = /([^&;=]+)=?([^&;]*)/g,
 		q = window.location.hash.substring(1);
-	while ( e = r.exec(q)) {
+	while ( e = r.exec(q) ) {
 		hashParams[e[1]] = decodeURIComponent(e[2]);
 	}
 	return hashParams;
@@ -55,7 +61,7 @@ function generateRandomString(length) {
 	text += possible.charAt(Math.floor(Math.random() * possible.length));
 	}
 	return text;
-};
+}
 
 function getSpotifyAuth() {
 	/* Authenticate with Spotify */
@@ -85,7 +91,7 @@ function getSpotifyAuth() {
 	// Open spotify's URl, thereby leaving the site
 	window.location = url;
 	// We get redirected back here by Spotify after authentication
-};
+}
 
 // ----------------- Callbacks -----------------
 
@@ -93,9 +99,8 @@ function handleLoggedInUser (response) {
 	var user_id = response['id'];
 	printToOutput("[OK] Authenticated as Spotify User: "+response['display_name']);
 
-	// Convert input url if necessary
-	var urlParts = urlInput.value.split("/");
-	var soundUrl = "https://www.bbc.co.uk/sounds/play/"+urlParts[urlParts.length-1];
+	// Strip query params and get episode code from URL input
+	var soundUrl = "https://www.bbc.co.uk/sounds/play/"+urlTest(urlInput.value);
 
 	// Get episode source from BBC Sounds
 	$.ajax({
@@ -129,8 +134,7 @@ function parseSoundSource (response) {
 	if (tracks == null) {
 		printToOutput("[ERROR] Cannot find any associated tracks.");
 		return undefined;
-	};
-	var track_count = tracks.length;
+	}
 	printToOutput("[OK] Found associated tracks: "+tracks.length);
 	
 	let links = tracks.filter(t => {
@@ -158,7 +162,7 @@ function parseSoundSource (response) {
 	// Use a custom title and description if available
 	if (titleInput.value !== ""){
 		title = titleInput.value;
-	};
+	}
 	if (descriptionInput.value !== ""){
 		var description = descriptionInput.value;
 	} else {
@@ -214,7 +218,7 @@ function handleNewPlaylist (response) {
 	});
 }
 
-function handleTracksAdded (response) {
+function handleTracksAdded () {
 	printToOutput("[OK] Added tracks to playlist.");
 	urlSubmit.innerHTML = "Go!";
 	window.location = this.playlist_url;
@@ -255,12 +259,12 @@ localStorage.removeItem('details');
 
 // If an access token has been given then we must have attempted authentication
 if (access_token && (state == null || state !== storedState)) {
-  	printToOutput("[ERROR] Failed Spotify authentication - please try again.");
+	printToOutput("[ERROR] Failed Spotify authentication - please try again.");
 	details.open = true;
 	urlSubmit.innerHTML = "Error!";
 } else {
 	// Remove auth stateKey once authorisation has been issued
-  	localStorage.removeItem(stateKey);
+	localStorage.removeItem(stateKey);
 
 	if (access_token) {
 		urlSubmit.innerHTML = "Wait...";

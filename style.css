@@ -84,8 +84,20 @@ main {
 	padding: 0 5px;
 }
 
-#urlSubmit {
+#urlInput .invalid {
+	outline-color: red;
+}
+
+#urlInput .valid {
+	outline-color: green;
+}
+
+#urlSubmit .invalid {
 	opacity: 0.4;
+}
+
+#urlSubmit .valid {
+	opacity: 1;
 }
 
 /* Instructions & More Options */
