@@ -227,6 +227,9 @@ function handleTracksAdded () {
 
 // ----------------- Code runs on load --------------------------
 
+// Ensure jQuery is loaded or failover locally
+window.jQuery || document.write('<script src="js/jquery-3.6.1.min.js"></script>');
+
 // Tie vars to document elements
 var urlInput = document.getElementById('urlInput');
 var urlSubmit = document.getElementById('urlSubmit');
