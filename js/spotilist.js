@@ -31,14 +31,6 @@ function printToOutput(message) {
 	outputBox.scrollTop = outputBox.scrollHeight;
 }
 
-function htmlDecode(input){
-	/* Decode's html that contains unicode characters
-	source: https://stackoverflow.com/a/2808386/6144626 */
-	var e = document.createElement('div');
-	e.innerHTML = input;
-	return e.childNodes[0].nodeValue;
-}
-
 // ----------------- Spotify Authentication Code --------------------------
 
 function getHashParams() {
