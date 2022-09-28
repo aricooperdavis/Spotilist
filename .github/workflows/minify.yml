@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Get short-SHA
         id: vars
-        run: echo "::set-output name=sSHA::$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -23,8 +23,10 @@ jobs:
       - run: terser ./js/spotilist.js --compress --mangle -o ./js/spotilist.js
       - run: npm install -g csso-cli
       - run: csso ./css/style.css -o ./css/style.css
+      - run: npm install -g html-minifier
+      - run: html-minifier --collapse-boolean-attributes --collapse-inline-tag-whitespace --collapse-whitespace --minify-css --minify-js --minify-urls --remove-attribute-quotes --remove-comments --remove-empty-attributes --remove-empty-elements --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-style-link-type-attributes --remove-tag-whitespace --use-short-doctype -o index.html index.html
       - run: |
           git config user.name aricooperdavis
           git config user.email aricooperdavis@user.noreply.github.com
-          git commit -am 'Automated minify of ${{ steps.vars.outputs.sSHA }}'
+          git commit -am 'Automated minify of ${{ steps.vars.outputs.sha_short }}'
           git push --force -u origin main:gh-pages
