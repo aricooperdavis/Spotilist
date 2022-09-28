@@ -3,7 +3,7 @@
 # the gh-pages branch, from which the site is built/served
 
 name: minify
-run-name: Minifying ${{ github.sha }} by ${{ github.actor }}
+run-name: Minify JS/CSS and deploy to gh-pages branch
 on:
   push:
     branches:
@@ -12,14 +12,19 @@ jobs:
   checkout-minify-push:
     runs-on: ubuntu-latest
     steps:
+      - name: Get short-SHA
+        id: vars
+        run: echo "::set-output name=sSHA::$(git rev-parse --short HEAD)"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
       - run: npm install -g terser
       - run: terser ./js/spotilist.js --compress --mangle -o ./js/spotilist.js
+      - run: npm install -g csso-cli
+      - run: csso ./css/style.css -o ./css/style.css
       - run: |
           git config user.name aricooperdavis
           git config user.email aricooperdavis@user.noreply.github.com
-          git commit -am 'Automated minify of ${{ github.sha }}'
+          git commit -am 'Automated minify of ${{ steps.vars.outputs.sSHA }}'
           git push --force -u origin main:gh-pages
