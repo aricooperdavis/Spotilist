@@ -1,0 +1,27 @@
+# This workflow should be triggered by a push to the main branch
+# and should minify the [js] in the repo then push the change to
+# the gh-pages branch, from which the site is built/served
+
+name: minify
+run-name: Minifying {{ github.sha }} by {{ github.actor }}
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  checkout-minify-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install -g terser
+      - run: terser ./js/spotify.js --compress --mangle -o ./js/spotify.js
+      - run: |
+        git config --global user.name aricooperdavis
+        git config --global user.email aricooperdavis@user.noreply.github.com
+        git commit -am 'Automated minify of {{ github.sha }}'
+        git push -u origin main:gh-pages
