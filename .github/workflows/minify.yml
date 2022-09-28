@@ -3,7 +3,7 @@
 # the gh-pages branch, from which the site is built/served
 
 name: minify
-run-name: Minifying {{ github.sha }} by {{ github.actor }}
+run-name: Minifying ${{ github.sha }} by ${{ github.actor }}
 on:
   push:
     branches:
@@ -17,9 +17,9 @@ jobs:
         with:
           node-version: '16'
       - run: npm install -g terser
-      - run: terser ./js/spotify.js --compress --mangle -o ./js/spotify.js
+      - run: terser ./js/spotilist.js --compress --mangle -o ./js/spotilist.js
       - run: |
           git config user.name aricooperdavis
           git config user.email aricooperdavis@user.noreply.github.com
-          git commit -am 'Automated minify of {{ github.sha }}'
+          git commit -am 'Automated minify of ${{ github.sha }}'
           git push -u origin main:gh-pages
