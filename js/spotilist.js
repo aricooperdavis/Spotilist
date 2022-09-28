@@ -31,7 +31,6 @@ function urlTest(urlAttempt) {
 		urlSubmit.className = "valid";
 		urlSubmit.disabled = false;
 		urlSubmit.innerHTML = "Go!";
-
 		match = match[1];
 	}
 
