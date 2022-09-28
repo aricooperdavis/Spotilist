@@ -21,7 +21,7 @@ jobs:
       - run: npm install -g terser
       - run: terser ./js/spotify.js --compress --mangle -o ./js/spotify.js
       - run: |
-        git config user.name aricooperdavis
-        git config user.email aricooperdavis@user.noreply.github.com
-        git commit -am 'Automated minify of {{ github.sha }}'
-        git push -u origin main:gh-pages
+          git config user.name aricooperdavis
+          git config user.email aricooperdavis@user.noreply.github.com
+          git commit -am 'Automated minify of {{ github.sha }}'
+          git push -u origin main:gh-pages
