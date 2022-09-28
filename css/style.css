@@ -59,24 +59,6 @@ main {
 	margin-bottom: 20px;
 }
 
-.button {
-	color: #333;
-	background: #fff;
-	border: 1px solid #222;
-	border-radius: 3px;
-	margin: 0px 5px;
-	padding: 5px;
-	font-size: 1em;
-}
-
-.button:active {
-	background: #ddd;
-}
-
-.button:hover, button:focus {
-	box-shadow: 0 0 2px #222;
-}
-
 #urlInput {
 	width: 31vw;
 	max-width: 600px;
