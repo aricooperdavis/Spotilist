@@ -72,8 +72,8 @@ function getSpotifyAuth() {
 	/* Authenticate with Spotify */
 
 	let client_id = 'd40f63276ab440b68c98f06f10728393'; // Your client id
-	//let redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
-	let redirect_uri = 'http://localhost:8000';
+	let redirect_uri = 'https://spotilist.cooper-davis.net'; // Your redirect uri
+	//let redirect_uri = 'http://localhost:8000';
 
 	let state = generateRandomString(16);
 
