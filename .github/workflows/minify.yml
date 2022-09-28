@@ -3,7 +3,7 @@
 # the gh-pages branch, from which the site is built/served
 
 name: minify
-run-name: Minify JS/CSS and deploy to gh-pages branch
+run-name: Minify JS/CSS/HTML [gh-pages branch]
 on:
   push:
     branches:
@@ -12,9 +12,6 @@ jobs:
   checkout-minify-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Get short-SHA
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -28,5 +25,5 @@ jobs:
       - run: |
           git config user.name aricooperdavis
           git config user.email aricooperdavis@user.noreply.github.com
-          git commit -am 'Automated minify of ${{ steps.vars.outputs.sha_short }}'
+          git commit -am 'Automated minify of ${{ github.sha }}'
           git push --force -u origin main:gh-pages
