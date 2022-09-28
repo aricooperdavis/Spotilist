@@ -22,4 +22,4 @@ jobs:
           git config user.name aricooperdavis
           git config user.email aricooperdavis@user.noreply.github.com
           git commit -am 'Automated minify of ${{ github.sha }}'
-          git push -u origin main:gh-pages
+          git push --force -u origin main:gh-pages
