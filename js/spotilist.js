@@ -157,10 +157,10 @@ if (access_token && (state == null || state !== storedState)) {
 			let user_id = response['id'];
 			printToOutput("[OK] Authenticated as Spotify User: "+response['display_name']);
 			
-			let soundUrl = "https://www.bbc.co.uk/sounds/play/"+urlTest(urlInput.value);
+			let soundId = urlTest(urlInput.value);
 			return Promise.all([
 				{user_id: user_id},
-				fetch("https://api.allorigins.win/raw?url="+soundUrl).then(response => response.text())
+				fetch(`http://132.145.67.16:1458/raw?url=${soundId}`).then(response => response.text())
 			]);
 		}).catch( error => {
 			if (error.name != 'SkipError') {
