@@ -160,7 +160,7 @@ if (access_token && (state == null || state !== storedState)) {
 			let soundId = urlTest(urlInput.value);
 			return Promise.all([
 				{user_id: user_id},
-				fetch(`http://132.145.67.16:1458/raw?url=${soundId}`).then(response => response.text())
+				fetch(`https://cors.cooper-davis.net/raw?url=${soundId}`).then(response => response.text())
 			]);
 		}).catch( error => {
 			if (error.name != 'SkipError') {
